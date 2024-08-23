@@ -1,0 +1,21 @@
+import PIL
+from PIL import Image
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+
+# Buka dialog untuk memilih file gambar
+file_path = askopenfilename()
+
+if file_path:  # Pastikan file dipilih
+    img = Image.open(file_path)
+    myWidth, myHeight = img.size
+
+    # Ubah ukuran gambar menjadi lebih kecil (10 kali lebih kecil dalam hal ukuran)
+    newWidth, newHeight = myWidth // 10, myHeight // 10
+    img = img.resize((newWidth, newHeight), Image.LANCZOS)
+
+    # Buka dialog untuk menyimpan file yang sudah dikompres
+    save_path = asksaveasfilename(defaultextension=".jpg", filetypes=[("JPEG files", "*.jpg"), ("All files", "*.*")])
+
+    if save_path:  # Pastikan path penyimpanan dipilih
+        # Simpan gambar dengan kompresi (kualitas lebih rendah untuk ukuran file lebih kecil)
+        img.save(save_path + "_compressed.jpg", quality=85)  # Anda bisa menurunkan kualitas untuk ukuran file yang lebih kecil
